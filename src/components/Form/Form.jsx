@@ -1,23 +1,75 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../../contexts/TodoContext";
+
+const Form = ({ todo, mode, editMode, setEditMode }) => {
+  const {
+    createTodo,
+    removeTodo,
+    updateTodo,
+  } = useContext(Context);
+
+  const [state, setState] = useState(todo);
 
 
-const Form = ({todo, createTodo, setTodoValue}) => {
-
-  function handleChange(e) {
-    setTodoValue(e.target.name,e.target.value)
-  }
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setState(() => ({ ...state, [name]: value }));
+  };
 
   function createNew(e) {
     e.preventDefault();
-    createTodo();
+    createTodo(state);
   }
 
-  //let [username, email, title, description] = todo;
+  function editOption() {
+    setEditMode(0);
+    
+  }
+
+  function deleteTodo(id) {
+    removeTodo(id);
+  }
+
+  function update(e) {
+    e.preventDefault();
+    updateTodo(state);
+    editOption();
+  }
+
+  const style = [
+    {
+      class: "form-section",
+      heading: "Create A New To-dos",
+      button: "Create",
+      onSubmit: (e) => createNew(e)
+    },
+    {
+      class: "card",
+      heading: "Update Todo",
+      button: "Update",
+      onSubmit: (e) => update(e)
+    },
+  ];
 
   return (
-    <div className="form-section">
-      <form onSubmit={(e) => createNew(e)}>
-        <h1>Create A New To-dos</h1>
+    <div className={style[mode].class}>
+      <form onSubmit={(e) => style[mode].onSubmit(e)}>
+        {mode === 0 ? (
+          <h1>{style[mode].heading}</h1>
+        ) : (
+          <div className="title">
+            <span>
+              <h2>{style[mode].heading}</h2>
+            </span>
+            <span>
+              <i className="fas fa-edit" onClick={() => editOption()}></i>
+              <i
+                className="fas fa-trash-alt"
+                onClick={() => deleteTodo(todo.id)}
+              ></i>
+            </span>
+          </div>
+        )}
 
         <div className="name-email-div">
           <div className="input-group">
@@ -26,8 +78,8 @@ const Form = ({todo, createTodo, setTodoValue}) => {
               type="text"
               id="username"
               name="username"
-              value={todo.username}
-              onChange={(e) => handleChange(e)}
+              value={state.username}
+              onChange={(e) => onChange(e)}
             />
           </div>
 
@@ -39,8 +91,8 @@ const Form = ({todo, createTodo, setTodoValue}) => {
               type="email"
               id="email"
               name="email"
-              value={todo.email}
-              onChange={(e) => handleChange(e)}
+              value={state.email}
+              onChange={(e) => onChange(e)}
             />
           </div>
         </div>
@@ -51,8 +103,8 @@ const Form = ({todo, createTodo, setTodoValue}) => {
           type="text"
           id="title"
           name="title"
-          value={todo.title}
-          onChange={(e) => handleChange(e)}
+          value={state.title}
+          onChange={(e) => onChange(e)}
         />
         <br />
 
@@ -63,13 +115,12 @@ const Form = ({todo, createTodo, setTodoValue}) => {
           name="description"
           rows="8"
           cols="50"
-          value={todo.description}
-          onChange={(e) => handleChange(e)}
-        >
-        </textarea>
+          value={state.description}
+          onChange={(e) => onChange(e)}
+        ></textarea>
         <br />
         <button className="btn" type="submit">
-          Create
+          {style[mode].button}
         </button>
       </form>
     </div>

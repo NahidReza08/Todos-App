@@ -7,7 +7,7 @@ export default function TodoCard({ todo, removeTodo, editMode, setEditMode }) {
   }
 
   function editOption() {
-    setEditMode((editMode+1)%2);
+    setEditMode(1);
   }
 
   return (

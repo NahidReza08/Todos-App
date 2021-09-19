@@ -1,22 +1,15 @@
 import React from "react";
 import "./App.css";
 import MainLayout from "./components/MainLayout/Main";
-
-
+import TodoContext from "./contexts/TodoContext";
 
 function App() {
-
-  // state = {
-  //   todos: [],
-  //   total: 0,
-  // };
-
-  //const [todos,totat] = this.state;
-
+  
   return (
-    <MainLayout />
+    <TodoContext>
+      <MainLayout />
+    </TodoContext>
   );
-
 }
 
 export default App;
