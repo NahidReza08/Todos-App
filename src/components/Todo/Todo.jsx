@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import Form from "../Form/Form";
 import TodoCard from "../TodoCard/TodoCard";
 
-export default function Todo({ todo, removeTodo, updateTodo }) {
+export default function Todo({ todo}) {
   const [editMode, setEditMode] = useState(0);
 
   return (
     <div>
-      {/* {console.log("Todo:",editmode)} */}
       {editMode === 1 ? (
         <Form
           todo={todo}
@@ -18,7 +17,6 @@ export default function Todo({ todo, removeTodo, updateTodo }) {
       ) : (
         <TodoCard
           todo={todo}
-          removeTodo={removeTodo}
           editMode={editMode}
           setEditMode={setEditMode}
         />

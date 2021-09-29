@@ -5,8 +5,8 @@ import Header from "../Header/Header";
 import Todos from "../Todos/Todos";
 
 function Main() {
-  const { todo,todoForm } = useContext(Context);
-  //console.log(useContext(Context),todoForm);
+  const { state } = useContext(Context);
+  const {todo, todoForm} = state;
 
   return (
     <div className="main">

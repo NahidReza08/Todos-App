@@ -3,8 +3,9 @@ import { Context } from "../../contexts/TodoContext";
 import Todo from "../Todo/Todo";
 
 const Todos = () => {
-  const { todos, todoCount, removeTodo, updateTodo } = useContext(Context);
-
+  const { state } = useContext(Context);
+  const {todos, todoCount} = state;
+  
   return (
     <div className="todos-section">
       <h1>All To-dos</h1>
@@ -17,8 +18,6 @@ const Todos = () => {
           <Todo
             key={todo.id}
             todo={todo}
-            removeTodo={removeTodo}
-            updateTodo={updateTodo}
           />
         ))}
       </div>

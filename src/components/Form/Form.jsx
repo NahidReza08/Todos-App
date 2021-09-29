@@ -2,11 +2,8 @@ import React, { useContext, useState } from "react";
 import { Context } from "../../contexts/TodoContext";
 
 const Form = ({ todo, mode, editMode, setEditMode }) => {
-  const {
-    createTodo,
-    removeTodo,
-    updateTodo,
-  } = useContext(Context);
+  
+  const {dispatch} = useContext(Context);
 
   const [state, setState] = useState(todo);
 
@@ -18,21 +15,20 @@ const Form = ({ todo, mode, editMode, setEditMode }) => {
 
   function createNew(e) {
     e.preventDefault();
-    createTodo(state);
+    dispatch({type:"createTodo",value:state});
   }
 
   function editOption() {
-    setEditMode(0);
-    
+    setEditMode(0);  
   }
 
   function deleteTodo(id) {
-    removeTodo(id);
+    dispatch({type:"deleteTodo",value:id});
   }
 
   function update(e) {
     e.preventDefault();
-    updateTodo(state);
+    dispatch({type:"updateTodo",value:state});
     editOption();
   }
 
@@ -80,6 +76,7 @@ const Form = ({ todo, mode, editMode, setEditMode }) => {
               name="username"
               value={state.username}
               onChange={(e) => onChange(e)}
+              required
             />
           </div>
 
@@ -93,6 +90,7 @@ const Form = ({ todo, mode, editMode, setEditMode }) => {
               name="email"
               value={state.email}
               onChange={(e) => onChange(e)}
+              required
             />
           </div>
         </div>
@@ -105,6 +103,7 @@ const Form = ({ todo, mode, editMode, setEditMode }) => {
           name="title"
           value={state.title}
           onChange={(e) => onChange(e)}
+          required
         />
         <br />
 
@@ -117,6 +116,7 @@ const Form = ({ todo, mode, editMode, setEditMode }) => {
           cols="50"
           value={state.description}
           onChange={(e) => onChange(e)}
+          required
         ></textarea>
         <br />
         <button className="btn" type="submit">

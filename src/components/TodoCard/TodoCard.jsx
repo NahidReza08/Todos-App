@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../../contexts/TodoContext";
 
-export default function TodoCard({ todo, removeTodo, editMode, setEditMode }) {
+export default function TodoCard({ todo, editMode, setEditMode }) {
+
+  const { dispatch } = useContext(Context);
 
   function deleteTodo(id) {
-    removeTodo(id);
+    dispatch({type:"removeTodo",value:id});
   }
 
   function editOption() {
